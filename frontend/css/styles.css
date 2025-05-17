@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+h2 {
+  text-align: center;
+}
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 10px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #2980b9;
+}
+.toggle {
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #3498db;
+}
+.message {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+}

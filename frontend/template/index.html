@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RealTimeForum</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+   <!-- Navigation Bar -->
+   <nav class="navbar">
+    <div class="container-md">
+        <a class="forum" href="/">FORUM</a>
+        <div class="nav-right">
+            {{if .IsLoggedIn}}
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <img src="static/images/user.png" alt="User Icon" class="user-icon">
+                </button>
+                <div class="dropdown-content">
+                    <span>{{.UserName}}</span>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            {{else}}
+            <a class="login" href="/login">Log in</a>
+            <a class="signup" href="/signup">Sign up</a>
+            {{end}}
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
