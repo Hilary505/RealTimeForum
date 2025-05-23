@@ -2,8 +2,7 @@ package handlers
 
 import (
 	"database/sql"
-	//"encoding/json"
-	"html/template"
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -20,33 +19,18 @@ type LoginRequest struct {
 
 // Handles client login
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		temp, err := template.ParseFiles("./frontend/template/login.html")
-		if err != nil {
-			// ErrorHandler(w, r, "Failed to load login page", http.StatusInternalServerError)
-			return
-		}
-		temp.Execute(w, nil)
-		return
-	}
-
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not Allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	err := r.ParseForm()
-	if err != nil {
-		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+	var creds LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
-	}
-
-	creds := LoginRequest{
-		Identifier: r.FormValue("identifier"),
-		Password:   r.FormValue("password"),
 	}
 	var hashedPassword string
 	var userID string
-	err = database.Db.QueryRow(`SELECT id,password FROM users WHERE nickname = ? OR email = ?`, creds.Identifier, creds.Identifier).Scan(&userID, &hashedPassword)
+	err := database.Db.QueryRow(`SELECT id,password FROM users WHERE nickname = ? OR email = ?`, creds.Identifier, creds.Identifier).Scan(&userID, &hashedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "Invalid login credentials", http.StatusUnauthorized)
@@ -82,7 +66,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	// Set session cookie
 	http.SetCookie(w, &http.Cookie{
-		Name:     "session_id",
+		Name:     "session_token",
 		Value:    sessionID,
 		Expires:  expiresAt,
 		HttpOnly: true,

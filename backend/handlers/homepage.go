@@ -3,33 +3,49 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+	"real-time-forum/backend/database"
+	"real-time-forum/backend/utils"
 )
 
-type HomePageData struct {
-	IsLoggedIn bool
-	UserName   string
-}
-func HomePage(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./frontend/template/index.html")
+// HandleHomepage serves the index.html page for the forum platform
+func HandleHomepage(w http.ResponseWriter, r *http.Request) {
+	// Only handle the root path
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Get user session info
+	valid, userID := utils.ValidateSession(r)
+	
+	// Parse and serve the template
+	tmpl, err := template.ParseFiles("/home/docker/real-time-forum/frontend/template/index.html")
 	if err != nil {
-		http.Error(w, "Template parsing error: "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
-	// Example: simulate login check using a cookie
-	cookie, err := r.Cookie("session_id")
-	if err != nil || cookie.Value == "" {
-		// Not logged in
-		tmpl.Execute(w, HomePageData{
-			IsLoggedIn: false,
-		})
-		return
+	// Create template data with login state
+	data := struct {
+		IsLoggedIn bool
+		Nickname   string
+	}{
+		IsLoggedIn: valid,
+		Nickname:   "",
 	}
 
-	// TODO: Query your database to get user info by session token
-	// For now, we assume it's valid for testing
-	tmpl.Execute(w, HomePageData{
-		IsLoggedIn: true,
-		UserName:   "JohnDoe", // Replace with actual user from DB
-	})
+	// If user is logged in, fetch their nickname
+	if valid {
+		var nickname string
+		err := database.Db.QueryRow("SELECT nickname FROM users WHERE id = ?", userID).Scan(&nickname)
+		if err == nil {
+			data.Nickname = nickname
+		}
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
 }

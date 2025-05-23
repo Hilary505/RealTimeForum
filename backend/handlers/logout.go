@@ -9,7 +9,7 @@ import (
 
 // Handles user logout
 func LogoutUser(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
@@ -32,6 +32,6 @@ func LogoutUser(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		Path:     "/",
 	})
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Logged out successfully"))
+	// Redirect to login page
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

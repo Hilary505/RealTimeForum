@@ -1,45 +1,236 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #DAE0E6;
+    color: #1A1A1B;
+    min-height: 100vh;
 }
-.container {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+.forum {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    background-color: #D34500;
+    padding: 10px 30px;
+    border-radius: 12px;
 }
-h2 {
-  text-align: center;
+
+.navbar {
+    background-color: white;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0 10px;
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
 }
-button {
-  width: 100%;
-  padding: 10px;
-  background: #3498db;
-  color: white;
-  border: none;
-  cursor: pointer;
+
+.login-button {
+    background: #0079D3;
+    color: white;
+    border: 1px solid #0079D3;
+    border-radius: 4px;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
 }
-button:hover {
-  background: #2980b9;
+
+.signup-button {
+    background: #0079D3;
+    color: white;
+    border: 1px solid #0079D3;
+    border-radius: 4px;
+    padding: 10px 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
 }
-.toggle {
-  text-align: center;
-  margin-top: 10px;
-  cursor: pointer;
-  color: #3498db;
+
+.content-area {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
 }
-.message {
-  text-align: center;
-  margin-top: 10px;
-  color: red;
+
+#container {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2, p {
+    color: #1D2B3A;
+}
+
+.input-field {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #FCFCFB;
+}
+
+.input-field:focus {
+    border-color: #0079D3;
+    outline: none;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login-text {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7c7c7c;
+}
+
+.login-link {
+    color: #0079D3;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#submit-button {
+    background: #0079D3;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #FF4500;
+    background-color: rgba(255, 69, 0, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 69, 0, 0.2);
+}
+
+.form-container, .homepage-content {
+    display: none;
+}
+
+.form-container.active, .homepage-content.active {
+    display: block;
+}
+
+.homepage-welcome {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.homepage-welcome h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.homepage-welcome p {
+    font-size: 18px;
+    color: #7c7c7c;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a,
+.dropdown-content span {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.nav-right {
+    margin-left: auto;
+    display: flex;
+    position: absolute;
+    right: 0;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #D34500;
+    color: white;
+    margin-left: 10px;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-icon {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
 }

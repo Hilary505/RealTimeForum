@@ -1,23 +1,31 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"real-time-forum/backend/database"
-	"real-time-forum/backend/handlers"
+	"real-time-forum/backend/routes"
 )
 
 func main() {
 	database.Init()
 	defer database.Db.Close()
-	//http.HandleFunc("/", handlers.HomePage)
-	http.HandleFunc("/", handlers.HandleLogin)
-	http.HandleFunc("/signup", handlers.HandleSignup)
 
-	log.Println("server starting: http://localhost:8080")
-	err := http.ListenAndServe(":8080", nil)
+	mux, err := routes.Routers()
 	if err != nil {
-		return
+		fmt.Println("Error")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "1995"
+	}
+
+	log.Println("server started on port http://localhost:1995")
+	if err := http.ListenAndServe(":"+port, mux); err != nil {
+		fmt.Println("Error starting server")
 	}
 }
